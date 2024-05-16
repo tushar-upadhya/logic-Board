@@ -1,49 +1,56 @@
+import React, { useMemo } from "react";
+
 import { Link } from "react-router-dom";
 import { socials } from "../utils/socialsUtils";
 
 const Footer = () => {
-  const currentYear = new Date().getFullYear();
-  const currentMonth = new Date().toLocaleString("default", { month: "long" });
+  const currentYear = useMemo(() => new Date().getFullYear(), []);
+  const currentMonth = useMemo(
+    () => new Date().toLocaleString("default", { month: "long" }),
+    []
+  );
+
   return (
-    <footer className="w-full bg-white">
-      <div className="w-full max-w-screen-xl p-4 py-6 mx-auto lg:py-8">
-        <div className="md:flex md:justify-between">
-          <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
-            <div>
-              <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
-                Follow me
-              </h2>
+    <footer className="bg-white">
+      <div className="max-w-screen-xl px-4 pb-8 mx-auto sm:px-6 lg:px-8 lg:pt-24">
+        <div className="pt-8 border-gray-100 sm:flex sm:items-center sm:justify-between lg:mt-24">
+          <ul className="flex flex-wrap justify-center gap-4 text-xs font-semibold lg:justify-end">
+            <li>
+              ©
+              <Link
+                to={"https://tusharupadhyay.vercel.app/"}
+                rel="noopener noreferrer"
+                className="text-gray-500 transition cursor-pointer hover:opacity-75"
+              >
+                {"  "} Tushar Upadhyay
+              </Link>
+            </li>
 
-              <ul className="font-medium text-gray-500 dark:text-gray-400">
-                {socials.map((social, index) => (
-                  <li key={index} className="mb-2">
-                    <Link
-                      to={social.href}
-                      target="_blank"
-                      className="hover:font-bold text-slate-900 transition-all duration-300 dark:hover:text-[#FFA447]"
-                    >
-                      {social.icon()} {social.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
+            <li>
+              <a href="#" className="text-gray-500 transition hover:opacity-75">
+                {currentMonth} {currentYear}
+              </a>
+            </li>
+          </ul>
 
-        <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
-
-        <div className="flex items-center justify-center text-black dark:text-gray-400">
-          <span className="gap-4 text-sm">
-            &#169; Copyright |{" "}
-            <Link
-              to="https://tusharupadhyay.vercel.app/"
-              className="hover:font-bold transition-all text-gray-500 dark:text-gray-400  duration-300 dark:hover:text-[#FFA447] "
-            >
-              Tushar Upadhyay
-            </Link>{" "}
-            | {currentMonth}
-          </span>
+          <ul className="flex justify-center gap-6 mt-8 font-semibold sm:mt-0 lg:justify-end">
+            {socials.map((item, index) => {
+              return (
+                <li
+                  className="text-gray-700 transition hover:opacity-75"
+                  key={index}
+                >
+                  <Link
+                    to={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <item.Icon />
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
         </div>
       </div>
     </footer>
